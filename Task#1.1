@@ -1,8 +1,5 @@
 <?php
- 
- 
- 
- function GetPaymentSystem($cardNumber){
+function GetPaymentSystem($cardNumber){
  	if ($cardNumber[0] == '4')
  		return 'VISA';
  	elseif ($cardNumber[0] == '5')
@@ -12,7 +9,6 @@
  	else
  		return 'UNKNOWN';
  }
-//$cardName = readline();
 
 $cardNumber = '4561 2612 1234 5467';
 
@@ -28,12 +24,9 @@ for ($i = 0; $i< strlen($cardNumber); $i++){
 		$evenSum += (int)$cardNumber[$i];		
 	}
 }
-echo($oddSum+$evenSum % 10);
 if (($oddSum+$evenSum) % 10 === 0)
 	print_r(['isValid' => 'True', 'paymentSystem' => GetPaymentSystem($cardNumber)]);
 else
 	print_r(['isValid' => 'False', 'paymentSystem' => "UNKNOWN"]);
-
-
 ?>
 
