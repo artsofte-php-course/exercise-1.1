@@ -1,0 +1,31 @@
+<?php
+
+function GetNameCard($num){
+ 	if ($num[0] == '4')
+ 		return 'VISA';
+ 	elseif ($num[0] == '5')
+ 		return 'Mastercard';
+ 	elseif (substr($num, 0, 3) == '220')
+ 		return 'MIR';
+ 	else
+ 		return 'UNKNOWN';
+ }
+
+$num = '4561 2612 1234 5467';
+$num = str_replace(' ', '',$num);
+$sum=0;
+for ($i = 0; $i< strlen($num); $i++){
+	if ($i%2==0){
+		$el = (int)$num[$i]*2;
+		$sum += strlen($el)!=2 ? $el : $el - 9;
+		}
+	else{
+		$sum += (int)$num[$i];		
+	    }
+    }
+if ($sum % 10 != 0)
+	print_r(['isValid' => 'False', 'paymentSystem' => GetNameCard($num)]);
+else
+	print_r(['isValid' => 'True', 'paymentSystem' => GetNameCard($num)]);
+
+?>
