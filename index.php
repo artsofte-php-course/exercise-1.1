@@ -1,8 +1,18 @@
 <?php
 //Номер карты передается как GET параметр с ключом "cardNumber"
-$cardNumber = $_GET["cardNumber"];
+if (isset($_GET["cardNumber"]) && !empty($_GET["cardNumber"])){
+    $cardNumber = $_GET["cardNumber"];    
+} else {
+    exit("card number is unknown");
+}
+
 $cardNumber = str_split(str_replace(" ", "", $cardNumber));    
 $cardNumber = array_map("intval", $cardNumber);
+
+if (count($cardNumber) != 16)
+{
+    exit("Not correct card number");
+}
 
 $result = [];
 
