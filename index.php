@@ -10,7 +10,7 @@ function isValid($card){
     for($j = 0; $j < count($arr); $j+=2){
         $arr[$j]*= 2;
         if($arr[$j] >= 10){
-            $arr[$j] = $arr[$j] % 10 + intdiv($arr[$j],$arr[$j]%10);
+            $arr[$j] = $arr[$j] % 10 + intdiv($arr[$j],10);
         }
     }
     if(array_key_exists($card[0],$paymentSystem)){
@@ -26,6 +26,8 @@ function isValid($card){
     return ["isValid" => $isvalid, "paymentSystem"=> $paymentSystem];
 
 }
-print_r(isValid("2201 1111 1111 1111"));
+$numberOfCard = readline("Введите номер карты:");
+
+print_r(isValid($numberOfCard));
 
 ?>
