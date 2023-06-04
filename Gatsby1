@@ -1,0 +1,57 @@
+<?php
+	function checkCreditCardNum($creditCardNum){
+  $creditCardNum = preg_replace('/\s+|-/', '', $creditCardNum);
+  if (!ctype_digit($creditCardNum)) {
+    return ["isValid" => false, "paymentSystem" => "UNKNOWN"];
+  }
+  $digits = str_split($creditCardNum);
+  if (count($digits) != 16 && count($digits) != 19) {
+    return ["isValid" => false, "paymentSystem" => "UNKNOWN"];
+  }
+  $sum = 0;
+  for ($i = count($digits) - 1; $i >= 0; $i--) {
+    $digit = (int) $digits[$i];
+    if (($i % 2) == 0) {
+      $digit *= 2;
+      if ($digit > 9) {
+        $digit -= 9;
+      }
+    }
+    $sum += $digit;
+  }
+
+  if (($sum % 10) != 0) {
+    return ["isValid" => false, "paymentSystem" => "UNKNOWN"];
+  }
+  switch ($digits[0]) {
+    case '4':
+      $paymentSystem = "Карта ВИЗА";
+      break;
+    case '5':
+      $paymentSystem = "Карта МАСТЕРКАРД";
+      break;
+      default:
+      $paymentSystem = "UNKNOWN";
+      break;
+  }
+   switch ($digits[0]) {
+      case '2':
+        switch ($digits[1]) {
+          case '2': 
+            switch ($digits[2]) {
+              case '0':
+      $paymentSystem = "Карта МИР";
+      break;
+      default:
+      $paymentSystem = "UNKNOWN";
+      break;
+            }
+        }
+   }
+  return ["isValid" => true, "paymentSystem" => $paymentSystem];
+}
+
+$result = checkCreditCardNum("Пишите здесь номер карта");
+echo $result["isValid"]; // true
+echo $result["paymentSystem"]; // VISA
+?>
